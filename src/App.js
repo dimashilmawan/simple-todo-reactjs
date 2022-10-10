@@ -62,7 +62,7 @@ const App = () => {
 		});
 
 		setTaskDetail(prevTaskDetail => {
-			if (prevTaskDetail.id !== taskId) return;
+			if (prevTaskDetail?.id !== taskId) return;
 			return null;
 		});
 	};
