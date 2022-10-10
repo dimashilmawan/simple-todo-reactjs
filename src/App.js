@@ -32,6 +32,7 @@ const App = () => {
 				description: "do it tomorrow",
 				comments: [],
 				isCompleted: false,
+				createdAt: Date.now(),
 			});
 			return newTask;
 		});
@@ -59,6 +60,26 @@ const App = () => {
 			const newTask = [...prevTasks].filter(task => task.id !== taskId);
 			return newTask;
 		});
+
+		setTaskDetail(prevTaskDetail => {
+			if (prevTaskDetail.id !== taskId) return;
+			return null;
+		});
+	};
+
+	const addCommentTaskHandler = (taskId, comment) => {
+		setTasks(prevTasks => {
+			const taskIndex = prevTasks.findIndex(task => {
+				return task.id === taskId;
+			});
+			const newTask = [...prevTasks];
+			newTask[taskIndex].comments.push({
+				text: comment,
+				createdAt: Date.now(),
+				id: "awda",
+			});
+			return newTask;
+		});
 	};
 
 	const showTaskDetailHandler = taskId => {
@@ -77,7 +98,12 @@ const App = () => {
 				onAddTask={addTaskHandler}
 				onShowTaskDetail={showTaskDetailHandler}
 			/>
-			{taskDetail && <TaskDetail taskDetail={taskDetail} />}
+			{taskDetail && (
+				<TaskDetail
+					taskDetail={taskDetail}
+					onAddCommentTask={addCommentTaskHandler}
+				/>
+			)}
 		</div>
 	);
 };

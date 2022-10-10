@@ -1,17 +1,21 @@
 import React from "react";
 import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
-const TaskDetail = ({ taskDetail: { id, description, comments } }) => {
+const TaskDetail = ({ taskDetail, onAddCommentTask }) => {
+	const inputDescriptionHandler = e => {};
 	return (
 		<div>
 			<p>Create on</p>
-			<textarea value={description} />
+			<textarea
+				value={taskDetail.description}
+				onChange={inputDescriptionHandler}
+			/>
 			<ul>
-				{comments.map(comment => (
-					<CommentList />
+				{taskDetail.comments.map(comment => (
+					<CommentList key={comment.id} comment={comment} />
 				))}
 			</ul>
-			<CommentForm />
+			<CommentForm onAddCommentTask={onAddCommentTask} taskId={taskDetail.id} />
 		</div>
 	);
 };
