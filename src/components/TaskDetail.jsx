@@ -21,7 +21,7 @@ const nth = function (d) {
 const generateDate = timestamp => {
 	const date = new Date(timestamp);
 	const day = nth(date.toLocaleString("default", { day: "numeric" }));
-	const month = date.toLocaleString("default", { month: "short" });
+	const month = date.toLocaleString("en-US", { month: "short" });
 	const time = date.toLocaleString("en-US", {
 		hour: "numeric",
 		minute: "numeric",
