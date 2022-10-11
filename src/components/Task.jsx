@@ -21,7 +21,7 @@ const Task = forwardRef(
 		return (
 			<div className="flex flex-col space-y-4 pt-10 md:h-screen md:w-1/2 md:p-8 md:pr-2">
 				<TaskForm onAddTask={onAddTask} />
-				<ul className="max-h-80 space-y-3 overflow-y-auto md:max-h-full md:p-0">
+				<ul className="max-h-80 space-y-3 overflow-y-auto  pt-1 md:max-h-full md:p-0">
 					{tasks.map(task => (
 						<TaskList
 							task={task}
@@ -50,5 +50,4 @@ const Task = forwardRef(
 		);
 	}
 );
-
 export default Task;

@@ -1,29 +1,37 @@
 import React, { useState, useRef } from "react";
+import { useStateWithCallbackLazy } from "use-state-with-callback";
 import { v4 as uuid } from "uuid";
 import Task from "./components/Task";
 import TaskDetail from "./components/TaskDetail";
 
 const App = () => {
-	const [tasks, setTasks] = useState([]);
+	const [tasks, setTasks] = useStateWithCallbackLazy([]);
 	const [taskDetail, setTaskDetail] = useState(null);
 	const taskListRef = useRef();
 	const commentListRef = useRef();
 
 	const addTaskHandler = text => {
-		setTasks(prevTasks => {
-			const newTasks = [...prevTasks];
-			newTasks.push({
-				id: uuid().slice(0, 8),
-				text: text,
-				description: "",
-				comments: [],
-				isCompleted: false,
-				createdAt: Date.now(),
-			});
-			return newTasks;
-		});
+		setTasks(
+			prevTasks => {
+				const newTasks = [...prevTasks];
+				newTasks.push({
+					id: uuid().slice(0, 8),
+					text: text,
+					description: "",
+					comments: [],
+					isCompleted: false,
+					createdAt: Date.now(),
+				});
+				return newTasks;
+			},
+			() =>
+				taskListRef.current.scrollIntoView({
+					behavior: "smooth",
+					block: "end",
+					inline: "nearest",
+				})
+		);
 		setTaskDetail(null);
-		taskListRef.current.scrollIntoView({ behavior: "smooth" });
 	};
 
 	const checkTaskHandler = (taskId, checked) => {
@@ -69,19 +77,21 @@ const App = () => {
 	};
 
 	const addCommentTaskHandler = (taskId, comment) => {
-		setTasks(prevTasks => {
-			const newTasks = [...prevTasks];
-			const taskIndex = prevTasks.findIndex(task => {
-				return task.id === taskId;
-			});
-			newTasks[taskIndex].comments.push({
-				text: comment,
-				createdAt: Date.now(),
-				id: uuid().slice(0, 8),
-			});
-			return newTasks;
-		});
-		commentListRef.current.scrollIntoView({ behavior: "smooth" });
+		setTasks(
+			prevTasks => {
+				const newTasks = [...prevTasks];
+				const taskIndex = prevTasks.findIndex(task => {
+					return task.id === taskId;
+				});
+				newTasks[taskIndex].comments.push({
+					text: comment,
+					createdAt: Date.now(),
+					id: uuid().slice(0, 8),
+				});
+				return newTasks;
+			},
+			() => commentListRef.current.scrollIntoView({ behavior: "smooth" })
+		);
 	};
 
 	const showTaskDetailHandler = taskId => {
