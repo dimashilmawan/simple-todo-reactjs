@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { v4 as uuid } from "uuid";
 import Task from "./components/Task";
 import TaskDetail from "./components/TaskDetail";
@@ -6,6 +6,8 @@ import TaskDetail from "./components/TaskDetail";
 const App = () => {
 	const [tasks, setTasks] = useState([]);
 	const [taskDetail, setTaskDetail] = useState(null);
+	const taskListRef = useRef();
+	const commentListRef = useRef();
 
 	const addTaskHandler = text => {
 		setTasks(prevTasks => {
@@ -20,6 +22,8 @@ const App = () => {
 			});
 			return newTasks;
 		});
+		setTaskDetail(null);
+		taskListRef.current.scrollIntoView({ behavior: "smooth" });
 	};
 
 	const checkTaskHandler = (taskId, checked) => {
@@ -77,6 +81,7 @@ const App = () => {
 			});
 			return newTasks;
 		});
+		commentListRef.current.scrollIntoView({ behavior: "smooth" });
 	};
 
 	const showTaskDetailHandler = taskId => {
@@ -86,7 +91,6 @@ const App = () => {
 	};
 
 	const hideTaskDetailHandler = () => {
-		console.log("a");
 		setTaskDetail(null);
 	};
 
@@ -103,8 +107,9 @@ const App = () => {
 	};
 
 	return (
-		<div className="flex flex-col bg-gray-200 md:h-screen md:flex-row">
+		<div className="flex min-h-screen flex-col bg-gray-200 md:flex-row">
 			<Task
+				ref={taskListRef}
 				tasks={tasks}
 				onCheckTask={checkTaskHandler}
 				onCheckAllTasks={checkAllTasksHandler}
@@ -115,6 +120,7 @@ const App = () => {
 			{!taskDetail && <div className="md:w-1/2"></div>}
 			{taskDetail && (
 				<TaskDetail
+					ref={commentListRef}
 					taskDetail={taskDetail}
 					onAddCommentTask={addCommentTaskHandler}
 					onUpdateTaskDescription={updateTaskDescriptionHandler}
