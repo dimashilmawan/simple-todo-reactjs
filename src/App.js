@@ -1,33 +1,17 @@
 import React, { useState } from "react";
+import { v4 as uuid } from "uuid";
 import Task from "./components/Task";
 import TaskDetail from "./components/TaskDetail";
 
-const dummyTasks = [
-	{
-		id: "a1",
-		text: "Learn React",
-		description: "do it now",
-		comments: [],
-		isCompleted: false,
-	},
-	{
-		id: "a2",
-		text: "Create Vue js project",
-		description: "do it tomorrow",
-		comments: [],
-		isCompleted: false,
-	},
-];
-
 const App = () => {
-	const [tasks, setTasks] = useState(dummyTasks);
+	const [tasks, setTasks] = useState([]);
 	const [taskDetail, setTaskDetail] = useState(null);
 
 	const addTaskHandler = text => {
 		setTasks(prevTasks => {
 			const newTask = [...prevTasks];
 			newTask.push({
-				id: "a3",
+				id: uuid().slice(0, 8),
 				text: text,
 				description: "do it tomorrow",
 				comments: [],
@@ -67,6 +51,19 @@ const App = () => {
 		});
 	};
 
+	const updateTaskDescriptionHandler = (taskId, taskDescription) => {
+		setTasks(prevTasks => {
+			const taskIndex = prevTasks.findIndex(task => {
+				return task.id === taskId;
+			});
+
+			const newTask = [...prevTasks];
+			newTask[taskIndex].description = taskDescription;
+
+			return newTask;
+		});
+	};
+
 	const addCommentTaskHandler = (taskId, comment) => {
 		setTasks(prevTasks => {
 			const taskIndex = prevTasks.findIndex(task => {
@@ -76,7 +73,7 @@ const App = () => {
 			newTask[taskIndex].comments.push({
 				text: comment,
 				createdAt: Date.now(),
-				id: "awda",
+				id: uuid().slice(0, 8),
 			});
 			return newTask;
 		});
@@ -85,9 +82,9 @@ const App = () => {
 	const showTaskDetailHandler = taskId => {
 		const newTask = [...tasks];
 		const taskIndex = newTask.findIndex(task => task.id === taskId);
+		console.log(newTask[taskIndex].description);
 		setTaskDetail(newTask[taskIndex]);
 	};
-
 	return (
 		<div className="flex min-h-screen flex-col bg-gray-100">
 			<Task
@@ -102,6 +99,7 @@ const App = () => {
 				<TaskDetail
 					taskDetail={taskDetail}
 					onAddCommentTask={addCommentTaskHandler}
+					onUpdateTaskDescription={updateTaskDescriptionHandler}
 				/>
 			)}
 		</div>

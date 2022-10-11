@@ -12,7 +12,7 @@ const CommentForm = ({ taskId, onAddCommentTask }) => {
 		onAddCommentTask(taskId, inputValue);
 	};
 	return (
-		<form onSubmit={submitHandler} className="flex space-x-2 p-3 pt-1">
+		<form onSubmit={submitHandler} className="flex space-x-2">
 			<input
 				ref={inputRef}
 				placeholder="fill comment"

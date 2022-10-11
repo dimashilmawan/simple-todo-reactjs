@@ -17,7 +17,7 @@ const Task = ({
 	return (
 		<div className="flex flex-1 flex-col">
 			<TaskForm onAddTask={onAddTask} />
-			<ul className="flex-1 space-y-3 p-4">
+			<ul className="flex-1 space-y-3 p-3">
 				{tasks.map(task => (
 					<TaskList
 						task={task}
