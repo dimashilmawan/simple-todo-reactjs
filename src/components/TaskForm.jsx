@@ -13,10 +13,7 @@ const TaskForm = ({ onAddTask }) => {
 		onAddTask(inputValue);
 	};
 	return (
-		<form
-			onSubmit={submitHandler}
-			className="flex items-center space-x-2 p-3 pb-1 md:p-0"
-		>
+		<form onSubmit={submitHandler} className="flex items-center space-x-2 pb-1">
 			<input
 				className="flex-1 rounded-lg p-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600"
 				ref={inputRef}

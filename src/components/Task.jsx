@@ -19,9 +19,9 @@ const Task = forwardRef(
 		};
 
 		return (
-			<div className="flex flex-col pt-10 md:h-screen md:w-1/2 md:space-y-4 md:p-8 md:pr-2">
+			<div className="flex flex-col space-y-4 pt-10 md:h-screen md:w-1/2 md:p-8 md:pr-2">
 				<TaskForm onAddTask={onAddTask} />
-				<ul className="max-h-80 space-y-3 overflow-y-auto p-3 md:max-h-full md:p-0">
+				<ul className="max-h-80 space-y-3 overflow-y-auto md:max-h-full md:p-0">
 					{tasks.map(task => (
 						<TaskList
 							task={task}
@@ -41,7 +41,7 @@ const Task = forwardRef(
 							onChange={checkAllInputHandler}
 							disabled={tasks.length === 0}
 						/>
-						<p className="p-2 text-lg text-gray-600 md:p-0 md:text-base">
+						<p className="text-lg text-gray-600 md:text-base">
 							Mark all as completed
 						</p>
 					</div>

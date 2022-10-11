@@ -107,7 +107,7 @@ const App = () => {
 	};
 
 	return (
-		<div className="flex min-h-screen flex-col bg-gray-200 md:flex-row">
+		<div className="flex min-h-screen flex-col bg-gray-200 px-3 pb-5 md:flex-row  md:px-0 md:pb-0">
 			<Task
 				ref={taskListRef}
 				tasks={tasks}

@@ -46,8 +46,8 @@ const TaskDetail = forwardRef(
 		};
 
 		return (
-			<div className="group relative flex flex-col space-y-4 p-3 pb-10  md:h-screen md:flex-1 md:p-8 md:pl-2">
-				<p className="text-center  text-gray-600 md:text-left md:text-sm">{`Created: ${generateDate(
+			<div className="group relative mt-5 flex flex-col space-y-4 rounded-xl bg-gray-300 p-5 md:mt-0 md:h-screen md:flex-1  md:bg-transparent md:p-8 md:pb-10 md:pl-2">
+				<p className="text-center text-gray-600 md:bg-transparent md:text-left md:text-sm">{`Created: ${generateDate(
 					taskDetail.createdAt
 				)}`}</p>
 				<textarea
@@ -76,7 +76,7 @@ const TaskDetail = forwardRef(
 				/>
 				<button
 					onClick={() => onHideTaskDetail()}
-					className="absolute -top-[14px] right-[14px] transition-all focus:outline-none focus:ring-2 focus:ring-gray-500 md:top-2 md:right-8 md:opacity-0 md:group-hover:opacity-100"
+					className="absolute -top-1 right-[12px] transition-all focus:outline-none focus:ring-2 focus:ring-gray-500 md:top-2 md:right-8 md:opacity-0 md:group-hover:opacity-100"
 				>
 					<FontAwesomeIcon
 						icon={faTimesCircle}
