@@ -25,13 +25,13 @@ const TaskList = ({
 	return (
 		<li
 			onClick={taskListClickHandler}
-			className={`flex items-center space-x-2 rounded-lg bg-sky-600 p-3 text-gray-100 transition-all ${
-				isCompleted ? "bg-gray-500" : ""
+			className={`group flex items-center space-x-2 rounded-lg bg-sky-600 p-3 text-gray-100 transition-all hover:-translate-y-[2px] hover:bg-sky-500 hover:shadow-sm hover:shadow-sky-600/95 ${
+				isCompleted ? "bg-gray-500 hover:bg-gray-500/90" : ""
 			}`}
 		>
 			<input
 				type="checkbox"
-				className="h-[0.875rem w-[0.875rem]"
+				className="h-[0.875rem w-[0.875rem] rounded-lg focus:outline-none focus:ring-2 focus:ring-white "
 				checked={isCompleted}
 				onChange={inputCheckHandler}
 			/>
@@ -42,7 +42,10 @@ const TaskList = ({
 			>
 				{text}
 			</p>
-			<button onClick={deleteTaskHandler}>
+			<button
+				onClick={deleteTaskHandler}
+				className="rounded-sm p-[2px] opacity-100 transition-all focus:outline-none focus:ring-2 focus:ring-white group-hover:visible group-hover:opacity-100 md:opacity-0 md:focus:opacity-100"
+			>
 				<FontAwesomeIcon icon={faTrashCan} className="text-xl" />
 			</button>
 		</li>

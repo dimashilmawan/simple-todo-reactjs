@@ -8,7 +8,7 @@ const CommentForm = ({ taskId, onAddCommentTask }) => {
 		e.preventDefault();
 		const inputValue = inputRef.current.value;
 		inputRef.current.value = "";
-		console.log(taskId);
+		if (inputValue === "") return;
 		onAddCommentTask(taskId, inputValue);
 	};
 	return (
@@ -16,10 +16,10 @@ const CommentForm = ({ taskId, onAddCommentTask }) => {
 			<input
 				ref={inputRef}
 				placeholder="fill comment"
-				className="flex-1 rounded-lg p-3"
+				className="flex-1 rounded-lg bg-gray-50 p-2 focus:outline-none focus:ring-2 focus:ring-sky-600"
 			/>
-			<button className="rounded-lg bg-sky-600 p-3">
-				<FontAwesomeIcon icon={faPen} className="text-lg text-white" />
+			<button className="hover:bg-600/90 rounded-lg bg-sky-600 p-2 transition-all hover:-translate-y-[2px] hover:shadow-sm hover:shadow-sky-600/90 focus:outline-none focus:ring-2 focus:ring-sky-600 focus:ring-offset-2 focus:ring-offset-gray-200">
+				<FontAwesomeIcon icon={faPen} className="text-base text-white" />
 			</button>
 		</form>
 	);

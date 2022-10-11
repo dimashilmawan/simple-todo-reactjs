@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
 
@@ -32,28 +34,44 @@ const TaskDetail = ({
 	taskDetail,
 	onAddCommentTask,
 	onUpdateTaskDescription,
+	onDeleteComment,
+	onHideTaskDetail,
 }) => {
 	const inputDescriptionHandler = e => {
 		onUpdateTaskDescription(taskDetail.id, e.target.value);
 	};
 
 	return (
-		<div className="flex flex-1 flex-col space-y-2 p-3">
-			<p>{`Created: ${generateDate(taskDetail.createdAt)}`}</p>
+		<div className="group relative flex h-[50vh] flex-col space-y-4  p-3 md:flex-1 md:p-8 md:pl-2">
+			<p className="text-gray-600 md:text-sm">{`Created: ${generateDate(
+				taskDetail.createdAt
+			)}`}</p>
 			<textarea
-				className="h-24 w-full rounded-lg p-1"
+				className="w-full rounded-lg bg-gray-50 p-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-sky-600 md:h-32"
 				value={taskDetail.description}
+				placeholder="Description"
 				onChange={inputDescriptionHandler}
 			/>
-			<ul className="flex flex-1 flex-col items-start justify-center space-y-3">
+			<ul className="flex flex-1 flex-col items-center space-y-3 overflow-y-auto  pt-1 md:items-start md:justify-start">
 				{taskDetail.comments.length === 0 && (
-					<p className="text-center font-normal">No Comment yet</p>
+					<p className="font-normal text-gray-500">No Comment yet</p>
 				)}
 				{taskDetail.comments.map(comment => (
-					<CommentList key={comment.id} comment={comment} />
+					<CommentList
+						key={comment.id}
+						comment={comment}
+						id={taskDetail.id}
+						onDeleteComment={onDeleteComment}
+					/>
 				))}
 			</ul>
 			<CommentForm onAddCommentTask={onAddCommentTask} taskId={taskDetail.id} />
+			<button
+				onClick={() => onHideTaskDetail()}
+				className="absolute top-0 right-3 transition-all focus:outline-none focus:ring-2 focus:ring-gray-500 md:top-2 md:right-8 md:opacity-0 md:group-hover:opacity-100"
+			>
+				<FontAwesomeIcon icon={faTimesCircle} className="text-gray-500" />
+			</button>
 		</div>
 	);
 };

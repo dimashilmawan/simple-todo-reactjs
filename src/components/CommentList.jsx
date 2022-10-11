@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { faClock, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 
 const getTimeAgo = timestamp => {
 	const time = new Date(Date.now() - timestamp).getMinutes();
@@ -10,17 +10,33 @@ const getTimeAgo = timestamp => {
 	return "from now";
 };
 
-const CommentList = ({ comment: { text, createdAt } }) => {
+const CommentList = ({
+	comment: { text, createdAt, id: commentId },
+	id: taskId,
+	onDeleteComment,
+}) => {
+	const deleteCommentHandler = e => {
+		onDeleteComment(taskId, commentId);
+	};
 	return (
-		<ul className="flex w-full flex-col rounded-lg bg-white p-2">
-			<p>{text}</p>
-			<div className="flex items-center space-x-2">
+		<li className="group relative flex w-full flex-col rounded-lg bg-gray-100/80 p-2 text-gray-500 transition-all hover:-translate-y-[2px] hover:shadow-sm">
+			<p className="text-gray-600">{text}</p>
+			<div className="flex items-center space-x-[6px]">
 				<span>
-					<FontAwesomeIcon className="text-base" icon={faClock} />
+					<FontAwesomeIcon className="text-sm" icon={faClock} />
 				</span>
-				<span>{getTimeAgo(createdAt)}</span>
+				<span className="text-sm">{getTimeAgo(createdAt)}</span>
 			</div>
-		</ul>
+			<button
+				onClick={deleteCommentHandler}
+				className="absolute top-[2px] right-[8px] transition-all focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-gray-500 md:opacity-0 md:group-hover:opacity-100"
+			>
+				<FontAwesomeIcon
+					className="text-xs text-gray-500/90"
+					icon={faTrashAlt}
+				/>
+			</button>
+		</li>
 	);
 };
 

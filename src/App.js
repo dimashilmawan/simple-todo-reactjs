@@ -9,40 +9,40 @@ const App = () => {
 
 	const addTaskHandler = text => {
 		setTasks(prevTasks => {
-			const newTask = [...prevTasks];
-			newTask.push({
+			const newTasks = [...prevTasks];
+			newTasks.push({
 				id: uuid().slice(0, 8),
 				text: text,
-				description: "do it tomorrow",
+				description: "",
 				comments: [],
 				isCompleted: false,
 				createdAt: Date.now(),
 			});
-			return newTask;
+			return newTasks;
 		});
 	};
 
 	const checkTaskHandler = (taskId, checked) => {
 		setTasks(prevTasks => {
 			const taskIndex = prevTasks.findIndex(task => task.id === taskId);
-			const newTask = [...prevTasks];
-			newTask[taskIndex].isCompleted = checked;
-			return newTask;
+			const newTasks = [...prevTasks];
+			newTasks[taskIndex].isCompleted = checked;
+			return newTasks;
 		});
 	};
 
 	const checkAllTasksHandler = checked => {
 		setTasks(prevTasks => {
-			const newTask = [...prevTasks];
-			newTask.forEach(task => (task.isCompleted = checked));
-			return newTask;
+			const newTasks = [...prevTasks];
+			newTasks.forEach(task => (task.isCompleted = checked));
+			return newTasks;
 		});
 	};
 
 	const deleteTaskHandler = taskId => {
 		setTasks(prevTasks => {
-			const newTask = [...prevTasks].filter(task => task.id !== taskId);
-			return newTask;
+			const newTasks = [...prevTasks].filter(task => task.id !== taskId);
+			return newTasks;
 		});
 
 		setTaskDetail(prevTaskDetail => {
@@ -57,36 +57,53 @@ const App = () => {
 				return task.id === taskId;
 			});
 
-			const newTask = [...prevTasks];
-			newTask[taskIndex].description = taskDescription;
+			const newTasks = [...prevTasks];
+			newTasks[taskIndex].description = taskDescription;
 
-			return newTask;
+			return newTasks;
 		});
 	};
 
 	const addCommentTaskHandler = (taskId, comment) => {
 		setTasks(prevTasks => {
+			const newTasks = [...prevTasks];
 			const taskIndex = prevTasks.findIndex(task => {
 				return task.id === taskId;
 			});
-			const newTask = [...prevTasks];
-			newTask[taskIndex].comments.push({
+			newTasks[taskIndex].comments.push({
 				text: comment,
 				createdAt: Date.now(),
 				id: uuid().slice(0, 8),
 			});
-			return newTask;
+			return newTasks;
 		});
 	};
 
 	const showTaskDetailHandler = taskId => {
-		const newTask = [...tasks];
-		const taskIndex = newTask.findIndex(task => task.id === taskId);
-		console.log(newTask[taskIndex].description);
-		setTaskDetail(newTask[taskIndex]);
+		const newTasks = [...tasks];
+		const taskIndex = newTasks.findIndex(task => task.id === taskId);
+		setTaskDetail(newTasks[taskIndex]);
 	};
+
+	const hideTaskDetailHandler = () => {
+		console.log("a");
+		setTaskDetail(null);
+	};
+
+	const deleteCommentHandler = (taskId, commentId) => {
+		setTasks(prevTasks => {
+			const taskIndex = prevTasks.findIndex(task => task.id === taskId);
+			const newComment = [...prevTasks[taskIndex].comments].filter(
+				comment => comment.id !== commentId
+			);
+			const newTasks = [...prevTasks];
+			newTasks[taskIndex].comments = newComment;
+			return newTasks;
+		});
+	};
+
 	return (
-		<div className="flex min-h-screen flex-col bg-gray-100">
+		<div className="flex flex-col bg-gray-200 md:h-screen md:flex-row">
 			<Task
 				tasks={tasks}
 				onCheckTask={checkTaskHandler}
@@ -95,11 +112,14 @@ const App = () => {
 				onAddTask={addTaskHandler}
 				onShowTaskDetail={showTaskDetailHandler}
 			/>
+			{!taskDetail && <div className="md:w-1/2"></div>}
 			{taskDetail && (
 				<TaskDetail
 					taskDetail={taskDetail}
 					onAddCommentTask={addCommentTaskHandler}
 					onUpdateTaskDescription={updateTaskDescriptionHandler}
+					onDeleteComment={deleteCommentHandler}
+					onHideTaskDetail={hideTaskDetailHandler}
 				/>
 			)}
 		</div>
