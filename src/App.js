@@ -9,7 +9,6 @@ const App = () => {
 	const [taskDetail, setTaskDetail] = useState(null);
 	const taskListRef = useRef();
 	const commentListRef = useRef();
-
 	const addTaskHandler = text => {
 		setTasks(
 			prevTasks => {

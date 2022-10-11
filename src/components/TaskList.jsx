@@ -28,7 +28,7 @@ const TaskList = ({
 			onClick={taskListClickHandler}
 			className={`group flex items-center space-x-2 rounded-lg bg-sky-600 p-3 text-gray-100 transition-all hover:-translate-y-[2px] hover:bg-sky-500 hover:shadow-sm hover:shadow-sky-600/95 ${
 				isCompleted ? "bg-gray-500 hover:bg-gray-500/90" : ""
-			} ${taskDetail?.id === id ? "animate-pulse" : ""}`}
+			} ${taskDetail?.id === id ? "animate-pulse-fast" : ""}`}
 		>
 			<input
 				type="checkbox"
