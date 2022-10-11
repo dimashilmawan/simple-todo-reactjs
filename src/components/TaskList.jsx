@@ -4,6 +4,7 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 const TaskList = ({
 	task: { text, isCompleted, id },
+	taskDetail,
 	onCheckTask,
 	onDeleteTask,
 	onShowTaskDetail,
@@ -18,7 +19,7 @@ const TaskList = ({
 	};
 
 	const taskListClickHandler = e => {
-		if (e.target.tagName !== "P") return;
+		if (e.target.tagName !== "P" && e.target.tagName !== "LI") return;
 		onShowTaskDetail(id);
 	};
 
@@ -27,7 +28,7 @@ const TaskList = ({
 			onClick={taskListClickHandler}
 			className={`group flex items-center space-x-2 rounded-lg bg-sky-600 p-3 text-gray-100 transition-all hover:-translate-y-[2px] hover:bg-sky-500 hover:shadow-sm hover:shadow-sky-600/95 ${
 				isCompleted ? "bg-gray-500 hover:bg-gray-500/90" : ""
-			}`}
+			} ${taskDetail?.id === id ? "animate-pulse" : ""}`}
 		>
 			<input
 				type="checkbox"

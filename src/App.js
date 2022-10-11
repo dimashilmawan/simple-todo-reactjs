@@ -121,6 +121,7 @@ const App = () => {
 			<Task
 				ref={taskListRef}
 				tasks={tasks}
+				taskDetail={taskDetail}
 				onCheckTask={checkTaskHandler}
 				onCheckAllTasks={checkAllTasksHandler}
 				onDeleteTask={deleteTaskHandler}

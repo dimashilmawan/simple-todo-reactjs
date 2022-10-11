@@ -5,6 +5,7 @@ const Task = forwardRef(
 	(
 		{
 			tasks,
+			taskDetail,
 			onCheckTask,
 			onCheckAllTasks,
 			onDeleteTask,
@@ -21,10 +22,11 @@ const Task = forwardRef(
 		return (
 			<div className="flex flex-col space-y-4 pt-10 md:h-screen md:w-1/2 md:p-8 md:pr-2">
 				<TaskForm onAddTask={onAddTask} />
-				<ul className="max-h-80 space-y-3 overflow-y-auto  pt-1 md:max-h-full md:p-0">
+				<ul className="max-h-80 space-y-3 overflow-y-auto p-1 pt-2 md:max-h-full">
 					{tasks.map(task => (
 						<TaskList
 							task={task}
+							taskDetail={taskDetail}
 							key={task.id}
 							onCheckTask={onCheckTask}
 							onDeleteTask={onDeleteTask}
